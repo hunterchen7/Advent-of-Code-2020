@@ -1,5 +1,7 @@
 bags = {} #part1
 numed_bags = {} #part2
+import time
+start = time.time()
 
 for bag in [i.strip('. \n').split('bag')[:-1] for i in open('advent7.txt', 'r').readlines()]: 
     main_bag = bag[0].strip()
@@ -39,16 +41,30 @@ def bag_types(bags):
 valid_bags = bag_types(bags)
 print(len(valid_bags))
 
-def count_inner_bags(count_bag):
-    total_bags = 0
+bag_count = 0
+bag_contain_count = {} # number of bags in each type of bag, including self
 
-    for inner_bag in bags[count_bag]:
-        if numed_bags[count_bag] == {}:
-            total_bags += 1
-            return total_bags
-        else:
-            return numed_bags[count_bag][inner_bag] * count_inner_bags(inner_bag)
+print(numed_bags)
 
-    return total_bags
+for bag in numed_bags:
+    if numed_bags[bag] == {}:
+        bag_contain_count[bag] = 1
 
-print(count_inner_bags('shiny gold'))
+print(bag_contain_count)
+
+while [i for i in bag_contain_count] != [i for i in numed_bags]:
+    if time.time() - start > 25:
+        break
+    for bag in numed_bags:
+        bag_content = [clr for clr in numed_bags[bag]]
+        if sum([True if bag in bag_contain_count else False for bag in bag_content]) == len(bag_content) and bag not in bag_contain_count: #all of bag_content is in bag_contain_count
+            inner_bags = []
+            for inner_bag in bag_content:
+                inner_bags.append(bag_contain_count[inner_bag] * numed_bags[bag][inner_bag])
+            bag_contain_count[bag] = sum(inner_bags)
+
+print(bag_contain_count)
+
+print(bag_contain_count['shiny gold'])
+
+#quite ugly but it is what it is. really gotta learn recursion :(
