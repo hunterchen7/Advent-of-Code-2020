@@ -29,4 +29,14 @@ for seat in seats:
 for row, col in row_cols:
     seat_ids.append(get_id(row, col))
 
-print(max(seat_ids))
+print(max(seat_ids)) #part 1
+
+sorted_ids = sorted(seat_ids)
+
+print(sorted_ids)
+
+for i in range(955-71):
+    if sorted_ids[i] != i + 71:
+        print(i + 71) #part 2
+        break
+
