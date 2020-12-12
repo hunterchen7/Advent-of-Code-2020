@@ -8,8 +8,8 @@ all_dirs = ['N', 'E', 'S', 'W']
 
 curr_dir = 'E'
 
-NS = 1
-WE = 10
+NS = 0
+WE = 0
 
 for line in instructions:
     mag = int(line[1:])
