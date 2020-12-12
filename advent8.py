@@ -7,8 +7,6 @@ instructions = [(i.strip().split(' ')) for i in open('advent8.txt', 'r').readlin
 
 #print(instructions)
 
-
-
 i = 0
 
 # part 1
@@ -46,7 +44,6 @@ prev_j = 0
 
 ts = ['nop', 'jmp']
 
-
 def prog(instructions):
     accum = 0
     i = 0
@@ -73,27 +70,21 @@ def prog(instructions):
 
         i += 1
 
-prev_j = 0
+new_instructions = instructions.copy()
 
 for j in range(len(instructions)):
     t = instructions[j][0]
 
     if t == 'jmp':
-        instructions[j][0] = 'nop'
-        j = prev_j
+        new_instructions[j][0] = 'nop'
     elif t == 'nop':
-        instructions[j][0] = 'jmp'
-        j = prev_j
+        new_instructions[j][0] = 'jmp'
 
-    p = instructions[prev_j][0]
-
-    succ = prog(instructions)
+    succ = prog(new_instructions)
 
     if succ:
         print(succ)
-        break
     else:
-        if p == 'jmp':
-            instructions[prev_j][0] = 'nop'
-        elif p == 'nop':
-            instructions[prev_j][0] = 'jmp'
+        new_instructions = instructions.copy()
+
+print(new_instructions)
